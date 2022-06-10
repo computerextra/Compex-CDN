@@ -9,9 +9,17 @@
 </head>
 <body>
 <?php
+    require_once("./inc/cats.inc.php");
     include_once("./inc/menu.inc.php");
 ?>
-
+<?php
+    $cats = GetCats();
+    echo "<ul>";
+    foreach($cats as $cat){
+        echo "<li>".$cat."</li>";
+    }
+    echo "</ul>";
+?>
 <?php
 include_once("./inc/footer.inc.php");
 ?>

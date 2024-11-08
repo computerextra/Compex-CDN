@@ -17,6 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./components/ui/dialog";
+import { Datenschutz, Impressum } from "./Pages";
 
 const DOMAIN = "https://cdn.computer-extra.com/";
 
@@ -199,10 +200,48 @@ const TOCWrapper = () => {
 };
 
 function App() {
+  const [showImpressum, setShowImpressum] = useState(false);
+  const [showDatenschutz, setShowDatenschutz] = useState(false);
   return (
-    <main className="container mt-12 border rounded-md ms-12">
-      <TOCWrapper />
-    </main>
+    <>
+      <div className="grid grid-cols-2">
+        <Button
+          variant="link"
+          onClick={() => {
+            setShowImpressum(false);
+            setShowDatenschutz((prev) => {
+              if (prev) {
+                return false;
+              } else {
+                return true;
+              }
+            });
+          }}
+        >
+          Datenschutz
+        </Button>
+        <Button
+          variant="link"
+          onClick={() => {
+            setShowDatenschutz(false);
+            setShowImpressum((prev) => {
+              if (prev) {
+                return false;
+              } else {
+                return true;
+              }
+            });
+          }}
+        >
+          Impressum
+        </Button>
+      </div>
+      {showDatenschutz && <Datenschutz />}
+      {showImpressum && <Impressum />}
+      <main className="container mt-12 border rounded-md ms-12">
+        <TOCWrapper />
+      </main>
+    </>
   );
 }
 

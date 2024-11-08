@@ -14,6 +14,7 @@ import {
 
 // https://shadcn-extension.vercel.app/docs/tree-view
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface TreeViewComponentProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 type TreeViewProps = {
@@ -95,6 +96,7 @@ export const TreeItem = forwardRef<
     elements?: TreeViewElement[];
     indicator?: boolean;
   } & React.HTMLAttributes<HTMLUListElement>
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 >(({ className, elements, indicator, ...props }, ref) => {
   return (
     <ul ref={ref} className="w-full space-y-1 " {...props}>

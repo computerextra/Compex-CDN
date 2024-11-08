@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { cn } from "@/lib/utils";
 import React, { forwardRef, useCallback, useRef } from "react";
 import useResizeObserver from "use-resize-observer";
@@ -12,9 +14,6 @@ import {
 
 // TODO: Add the ability to add custom icons
 
-// https://shadcn-extension.vercel.app/docs/tree-view
-
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface TreeViewComponentProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 type TreeViewProps = {
@@ -96,7 +95,6 @@ export const TreeItem = forwardRef<
     elements?: TreeViewElement[];
     indicator?: boolean;
   } & React.HTMLAttributes<HTMLUListElement>
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 >(({ className, elements, indicator, ...props }, ref) => {
   return (
     <ul ref={ref} className="w-full space-y-1 " {...props}>

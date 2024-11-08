@@ -1,29 +1,39 @@
 <?php
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+
 header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json; charset=utf-8');
 
-$elements = [];
-$id = 1;
 
-function getDirectories($path, $elememts, $id)
+function scanDirectory($dir, &$id = 1, $basePath = '')
 {
+    $result = array();
+    $cdir = scandir($dir);
+    $currentPath = $basePath . ($basePath ? DIRECTORY_SEPARATOR : '') . basename($dir);
 
-    foreach (new DirectoryIterator($path) as $file) {
-        if ($file->isDir() && !$file->isDot()) {
-            $foldername = $file->getFilename();
-            array_push($elements, ["id" => $id, "name" => $foldername, "children" => []]);
-            $elememts = getDirectories($path . "/" . $file->getFilename(), $elememts, $id);
+    foreach ($cdir as $key => $value) {
+        if (!in_array($value, array('.', '..'))) {
+            $fullPath = $currentPath . DIRECTORY_SEPARATOR . $value;
+            if (is_dir($dir . DIRECTORY_SEPARATOR . $value)) {
+                $result[] = array(
+                    'id' => strval($id++),
+                    'name' => $value,
+                    'children' => scanDirectory($dir . DIRECTORY_SEPARATOR . $value, $id, $currentPath)
+                );
+            } else {
+                $result[] = array(
+                    'id' => strval($id++),
+                    'name' => $value,
+                    'fullPath' => $fullPath
+                );
+            }
         }
-        if ($file->isFile()) {
-            $filename = $file->getFilename();
-            array_push($elements[$id]["children"], ["id" => $id++, "name" => $filename]);
-        }
-        $id = $id + 1;
     }
 
-    return $elememts;
+    return $result;
 }
 
-$elements = getDirectories("content/", $elements, $id);
-
-echo (json_decode($elements));
+$directoryPath = 'content/';
+$directoryArray = scanDirectory($directoryPath);
+echo json_encode($directoryArray, JSON_PRETTY_PRINT);
